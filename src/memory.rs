@@ -73,7 +73,7 @@ impl Default for Memory {
 /// ```
 pub trait Bus {
     /// Returns the byte at the given address.
-    fn get_byte(&mut self, address: u16) -> u8;
+    fn get_byte(&self, address: u16) -> u8;
 
     /// Sets the byte at the given address to the given value.
     fn set_byte(&mut self, address: u16, value: u8);
@@ -106,7 +106,7 @@ impl Memory {
 }
 
 impl Bus for Memory {
-    fn get_byte(&mut self, address: u16) -> u8 {
+    fn get_byte(&self, address: u16) -> u8 {
         self.bytes[address as usize]
     }
 
