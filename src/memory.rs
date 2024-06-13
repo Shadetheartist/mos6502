@@ -34,6 +34,8 @@
 //     end: Address,
 // }
 
+use core::ops::Range;
+
 const ADDR_LO_BARE: u16 = 0x0000;
 const ADDR_HI_BARE: u16 = 0xFFFF;
 
@@ -72,6 +74,8 @@ impl Default for Memory {
 /// assert_eq!(memory.get_byte(0x0000), 0x12);
 /// ```
 pub trait Bus {
+    fn get_bytes(&self, range: Range<usize>) -> &[u8];
+
     /// Returns the byte at the given address.
     fn get_byte(&self, address: u16) -> u8;
 
@@ -106,6 +110,10 @@ impl Memory {
 }
 
 impl Bus for Memory {
+    fn get_bytes(&self, range: Range<usize>) -> &[u8] {
+        &self.bytes[range]
+    }
+
     fn get_byte(&self, address: u16) -> u8 {
         self.bytes[address as usize]
     }

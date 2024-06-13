@@ -735,9 +735,12 @@ impl<M: Bus, V: Variant> CPU<M, V> {
         };
     }
 
-    pub fn single_step(&mut self) {
+    pub fn single_step(&mut self) -> Option<DecodedInstr> {
         if let Some(decoded_instr) = self.fetch_next_and_decode() {
             self.execute_instruction(decoded_instr);
+            Some(decoded_instr)
+        } else {
+            None
         }
     }
 
